@@ -1,12 +1,12 @@
 <template>
   <div class="container">
     <div class="row">
-      <header-banner />
+      <HeaderBanner />
     </div>
     <div class="row">
-      <game-window />
-      <game-window />
-      <game-window />
+      <GameWindow />
+      <GameWindow />
+      <GameWindow />
     </div>
   </div>
 </template>
