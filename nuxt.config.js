@@ -25,6 +25,9 @@ export default {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
+  serverMiddleware: [
+    '~/api/index.js'
+  ],
   /*
   ** Global CSS
   */
@@ -54,6 +57,7 @@ export default {
     'bootstrap-vue/nuxt',
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
+    // 'axios',
   ],
   /*
   ** Axios module configuration

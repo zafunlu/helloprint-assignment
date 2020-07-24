@@ -20,6 +20,7 @@ export default {
     GameWindow,
     HeaderBanner
   },
+  middleware: 'serverMiddleware',
   head() {
     return {
       title: 'HelloPrint Assignment'
