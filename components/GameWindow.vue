@@ -1,7 +1,7 @@
 <template>
     <div class="col-md">
         <div class="game-window">
-          <form @submit.prevent="submit">
+          <form @submit.prevent="submitNumber">
             <div class="form-group">
               <label for="user-input">Enter a number between 0 and 100</label>
               <input type="text" class="form-control input-sm" id="user-input">
@@ -14,14 +14,15 @@
 
 <script>
 export default {
-    data() {
-    },
     created () {
    
     },
     name: 'GameWindow',
     methods: {
-        submit(event) {
+        startGame() {
+
+        },
+        submitNumber(event) {
             alert('')
             // Add functionality
         },
