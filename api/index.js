@@ -18,14 +18,17 @@ app.post("/", function(req, res) {
     // res.send(inputNumber)
     let guessedNumber = 50
     // res.send([playerId, num])
-    if(inputNumber < guessedNumber) {
+    if (inputNumber < guessedNumber) {
         res.send({"guess": "higher"})
     }
-    else if(inputNumber > guessedNumber) {
+    else if (inputNumber > guessedNumber) {
         res.send({"guess": "lower"})
     }
-    else {
+    else if (inputNumber === guessedNumber) {
         res.send({"guess": "Bingo!!!"})
+    }
+    else {
+        res.send('Invalid input')
     }
 });
 
