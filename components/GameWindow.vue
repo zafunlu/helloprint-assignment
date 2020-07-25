@@ -1,7 +1,7 @@
 <template>
     <div class="col-md">
         <div class="game-window">
-          <form @submit.prevent="submitNumber" action="api" method="get">
+          <form @submit.prevent="submitNumber" action="api">
             <div class="form-group">
               <label for="user-input">Enter a number between 0 and 100 </label>
               <input type="text" class="form-control input-sm" id="user-input">
@@ -15,19 +15,20 @@
 <script>
 import axios from 'axios'
 
+
+let playerId = Math.floor(Math.random() * 101);
+// console.log(session.value);
+
 export default {
     name: 'GameWindow',
     methods: {
-      startGame() {
-        // let response = await axios.post('/api', {number: generateNumber})
-      },
       async submitNumber() {
         let inputNumber = document.querySelector('#user-input').value;
-        let response = await axios.post('/api/'+inputNumber+'', {number: inputNumber});
+        let response = await axios.post('/api/', {playerid: playerId, number: inputNumber});
         console.log(response.data);
       },
       generateNumber: function () {
-          return Math.floor(Math.random()*101)
+          return Math.floor(Math.random() * 101);
       }
     }
 }
