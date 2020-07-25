@@ -16,19 +16,22 @@
 import axios from 'axios'
 
 
-let playerId = Math.floor(Math.random() * 101);
+let playerId = Math.floor(Math.random() * 101)
 // console.log(session.value);
 
 export default {
     name: 'GameWindow',
     methods: {
       async submitNumber() {
-        let inputNumber = document.querySelector('#user-input').value;
-        let response = await axios.post('/api/', {playerid: playerId, number: inputNumber});
-        console.log(response.data);
+        let inputNumber = document.querySelector('#user-input').value
+        let response = await axios.post('/api/', {playerid: playerId, number: inputNumber})
+        if (response.data.guess === "Bingo!!!") {
+          alert(response.data.guess)
+        }
+        
       },
       generateNumber: function () {
-          return Math.floor(Math.random() * 101);
+          return Math.floor(Math.random() * 101)
       }
     }
 }
