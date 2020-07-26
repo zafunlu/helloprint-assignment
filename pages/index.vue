@@ -4,15 +4,15 @@
       <HeaderBanner />
     </div>
     <div class="row">
-      <GameWindow />
-      <GameWindow />
-      <GameWindow />
+      <GameWindow :enabledButtons="!playerWon" v-on:playerWon="handlePlayerWon"/>
+      <GameWindow :enabledButtons="!playerWon" v-on:playerWon="handlePlayerWon"/>
+      <GameWindow :enabledButtons="!playerWon" v-on:playerWon="handlePlayerWon"/>
     </div>
   </div>
 </template>
 
 <script>
-import GameWindow from '~/components/GameWindow.vue'
+import GameWindow from '~/components/GameWindow'
 import HeaderBanner from '~/components/HeaderBanner'
 
 export default {
@@ -20,10 +20,19 @@ export default {
     GameWindow,
     HeaderBanner
   },
-  // middleware: 'serverMiddleware',
+  data() {
+    return {
+      playerWon: false
+    }
+  },
   head() {
     return {
       title: 'HelloPrint Assignment'
+    }
+  },
+  methods: {
+    handlePlayerWon() {
+      this.playerWon = true
     }
   }
 }

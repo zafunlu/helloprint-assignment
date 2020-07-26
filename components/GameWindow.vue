@@ -3,10 +3,11 @@
         <div class="game-window">
           <form @submit.prevent="submitNumber" action="api">
             <div class="form-group">
-              <label for="user-input">Enter a number between 0 and 100 </label>
-              <input type="text" class="form-control input-sm" id="user-input">
+              <label for="user-input">Enter a number between 0 and 100x</label>
+              <input type="text" class="form-control input-sm" id="user-input" ref="userInput">
             </div>
-            <button type="submit" class="btn btn-success btn-block">Submit</button>
+            <button type="submit" class="btn btn-success btn-block" v-if="enabledButtons" >Submit</button>
+            <button type="submit" class="btn btn-success btn-block" v-else disabled>Submit</button>
           </form>
         </div>
       </div>
@@ -15,25 +16,36 @@
 <script>
 import axios from 'axios'
 
-
+// Hardcoded playerId generator to simulate what it actually should do
 let playerId = Math.floor(Math.random() * 101)
-// console.log(session.value);
 
 export default {
-    name: 'GameWindow',
-    methods: {
-      async submitNumber() {
-        let inputNumber = document.querySelector('#user-input').value
-        let response = await axios.post('/api/', {playerid: playerId, number: inputNumber})
-        if (response.data.guess === "Bingo!!!") {
-          alert(response.data.guess)
-        }
-        
-      },
-      generateNumber: function () {
-          return Math.floor(Math.random() * 101)
+  name: 'GameWindow',
+  props: {
+    enabledButtons: Boolean
+  },
+  methods: {
+    async submitNumber() {
+      let inputNumber = this.$refs['userInput'].value
+      let response = await axios.post('/api/', {playerid: playerId, number: inputNumber})
+      console.log(response.data)
+      if (response.data.guess === "Bingo!!!") {
+        alert(response.data.guess)
+        this.$emit('playerWon')
+      }
+      else if (response.data.guess === "higher") {
+        alert(response.data.guess)
+      }
+      else if (response.data.guess === "lower") {
+        alert(response.data.guess)
       }
     }
+  },
+   mounted() {
+    if (process.client) {
+      window.localStorage.setItem('playerWon', false)
+    }
+  }
 }
 </script>
 
