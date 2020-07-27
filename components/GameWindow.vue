@@ -1,15 +1,16 @@
 <template>
     <div class="col-md">
-        <div class="game-window">
-          <form @submit.prevent="submitNumber" action="api">
-            <div class="form-group">
-              <label for="user-input">Enter a number between 0 and 100x</label>
-              <input type="text" class="form-control input-sm" id="user-input" ref="userInput">
-            </div>
-            <button type="submit" class="btn btn-success btn-block" v-if="enabledButtons" >Submit</button>
-            <button type="submit" class="btn btn-success btn-block" v-else disabled>Submit</button>
-          </form>
-        </div>
+      <div class="game-window">
+        <form @submit.prevent="submitNumber" action="api">
+          <div class="form-group">
+            <label class="message" for="user-input"> {{ guess }} </label>
+            <input type="text" class="form-control input-sm" id="user-input" ref="userInput">
+          </div>
+          <button type="submit" class="btn btn-success btn-block" v-if="enabledButtons" >Submit</button>
+          <button type="submit" class="btn btn-success btn-block" v-else disabled>Submit</button>
+        </form>
+      </div>
+        
       </div>
 </template>
 
@@ -21,6 +22,11 @@ let playerId = Math.floor(Math.random() * 101)
 
 export default {
   name: 'GameWindow',
+  data() {
+    return {
+      guess: 'Enter a number between 0 and 100'
+    }
+  },
   props: {
     enabledButtons: Boolean
   },
@@ -30,14 +36,17 @@ export default {
       let response = await axios.post('/api/', {playerid: playerId, number: inputNumber})
       console.log(response.data)
       if (response.data.guess === "Bingo!!!") {
-        alert(response.data.guess)
         this.$emit('playerWon')
+        this.guess = response.data.guess
       }
       else if (response.data.guess === "higher") {
-        alert(response.data.guess)
+        this.guess = '↑ Higher ↑'
       }
       else if (response.data.guess === "lower") {
-        alert(response.data.guess)
+        this.guess = '↓ Lower ↓'
+      }
+      else {
+        this.guess = 'Invalid input. Please try again.'
       }
     }
   },
@@ -56,8 +65,12 @@ export default {
     text-align: center;
     border: 1px solid rgb(202, 199, 199);
     border-radius: 3px;
-    /* padding: 75px 100px; */
     padding: 25% 30%;
     margin-bottom: 20px;
+    min-height: 300px;
+  }
+
+  .message {
+    min-height: 36px;
   }
 </style>
